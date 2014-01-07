@@ -1,0 +1,15 @@
+*.bbl
+*.blg
+*.mat
+*.bak
+*.nav
+*.out
+*.aux
+*_aux
+*.toc
+*.log
+*.swp
+*.snm
+*.vim
+*.mexmaci64
+*.o
