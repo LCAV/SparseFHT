@@ -1,9 +1,14 @@
-clear;
+
+clearvars -except 'Repetitions' 'Type';
 
 addpath('../C');
 
-Repetitions = 1000;  % repetition
-Type = 'Deterministic';
+if (~exist('Repetitions'))
+  Repetitions = 1000;  % repetition
+end
+if (~exist('Type'))
+  Type = 'Deterministic';
+end
 
 % Global parameters
 n = 22;        % log2 of signal size
@@ -37,7 +42,7 @@ Success   = zeros(blen, clen, Repetitions);
 %%%%%%%%%%%%%%%%%%
 
 if (matlabpool('size') == 0)
-  matlabpool local 10;
+  matlabpool open;
 end
 
 for ic = 1:clen

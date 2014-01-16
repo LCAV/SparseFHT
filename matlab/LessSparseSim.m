@@ -1,10 +1,14 @@
 
-clear;
+clearvars -except 'Repetitions' 'Type';
 
 addpath('../C');
 
-Repetitions = 1000;
-Type = 'Deterministic';
+if (~exist('Repetitions'))
+  Repetitions = 1000;
+end
+if (~exist('Type'))
+  Type = 'Deterministic';
+end
 
 % Global parameters
 b = 17;
@@ -35,7 +39,7 @@ Success   = zeros(alen, Repetitions);
 %%%%%%%%%%%%%%%%%%
 
 if (matlabpool('size') == 0)
-  matlabpool local 10;
+  matlabpool open;
 end
 
 parfor ia=1:alen

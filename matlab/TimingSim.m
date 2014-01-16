@@ -1,12 +1,14 @@
 
-clear;
+clearvars -except 'Repetitions';
 
 addpath('../C');
 
 % parameters
+if (~exist('Repetitions'))
+  Repetitions = 1000;
+end
 n = 5:23;
 L = 10;
-Loops  = 1000;
 Subloop = 10;
 Warm   = 2;
 Body   = 10;
@@ -24,8 +26,8 @@ seed = 0; % RNG seed (fixing the seed fixes the sparsity pattern)
 seed = sum(100*clock); % randomness!
 rng(seed, 'twister');
 
-for k=1:Loops/Subloop
-  fprintf('Subloop %d/%d : ', k, Loops/Subloop);
+for k=1:Repetitions/Subloop
+  fprintf('Subloop %d/%d : ', k, Repetitions/Subloop);
   for i=1:length(n)
     fprintf('%d ', n(i));
     b{i} = 1:n(i)-2;
