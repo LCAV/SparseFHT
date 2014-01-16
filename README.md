@@ -32,11 +32,6 @@ a sparse-graph code for the binary erasure channel (BEC). Tools from coding
 theory are used to analyze the asymptotic performance of the algorithm in the
 “very sparse” (α ∈ (0,1]) and the “less sparse” (α ∈ (1,1)) regime.
 
-Version
--------
-
-The code version is v0.2.
-
 Contact
 -------
 
