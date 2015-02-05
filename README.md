@@ -6,7 +6,7 @@ The code is hosted on [github](https://github.com/LCAV/SparseFHT).
 
 [Long] R. Scheibler, S.Haghighatshoar, and M. Vetterli,
 [_A Fast Hadamard Transform for Signals with Sub-linear Sparsity in the Transform Domain_](http://infoscience.epfl.ch/record/204991),
-IEEE Tran. Inf. Theory, 2015.
+IEEE Trans. Inf. Theory, vol. 61, 2015.
 
 [Short] R. Scheibler, S. Haghighatshoar, and M. Vetterli,
 [_A Fast Hadamard Transform for Signals with Sub-linear Sparsity_](http://infoscience.epfl.ch/record/189818),
