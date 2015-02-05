@@ -148,7 +148,7 @@ The libraries included are:
 License
 -------
 
-2013-2014 (c) Robin Scheibler, Saeid Haghighatshoar, Martin, Vetterli.
+2013-2015 (c) Robin Scheibler, Saeid Haghighatshoar, Martin, Vetterli.
 
 This work is licensed under the Creative Commons
 Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
