@@ -16,7 +16,7 @@
     <div class="wrapper">
       <header>
         <h1>SparseFHT</h1>
-        <p>A Fast Hadamard Transform for Signals with Sub-linear Sparsity in the Transform Domain -- Implementation</p>
+        <p>A Fast Hadamard Transform for Signals with Sub-linear Sparsity in the Transform Domain - Implementation</p>
 
         <p class="view"><a href="https://github.com/LCAV/SparseFHT">View the Project on GitHub <small>LCAV/SparseFHT</small></a></p>
 
@@ -28,59 +28,65 @@
         </ul>
       </header>
       <section>
-        <p>This is the code for SparseFHT algorithm as presented in the following papers.</p>
+        <p>This is the code for SparseFHT algorithm as presented in the following papers.
+The code is hosted on <a href="https://github.com/LCAV/SparseFHT">github</a>.</p>
 
 <p>[Long] R. Scheibler, S.Haghighatshoar, and M. Vetterli,
-<a href="http://arxiv.org/abs/1310.1803"><em>A Fast Hadamard Transform for Signals with Sub-linear Sparsity in the Transform Domain</em></a>,
-arXiv:1310.1803, 2013.</p>
+<a href="http://infoscience.epfl.ch/record/204991"><em>A Fast Hadamard Transform for Signals with Sub-linear Sparsity in the Transform Domain</em></a>,
+IEEE Trans. Inf. Theory, vol. 61, 2015.</p>
 
 <p>[Short] R. Scheibler, S. Haghighatshoar, and M. Vetterli,
 <a href="http://infoscience.epfl.ch/record/189818"><em>A Fast Hadamard Transform for Signals with Sub-linear Sparsity</em></a>,
 Allerton Conference on Communication, Control and Computing, 2013.</p>
 
 <h2>
-<a name="abstract" class="anchor" href="#abstract"><span class="octicon octicon-link"></span></a>Abstract</h2>
+<a id="abstract" class="anchor" href="#abstract" aria-hidden="true"><span class="octicon octicon-link"></span></a>Abstract</h2>
 
-<p>A new iterative low complexity algorithm has been presented for computing the
-Walsh-Hadamard transform (WHT) of an N dimensional signal with a K-sparse WHT,
-where N is a power of two and K = O(N^α), scales sub-linearly in N for some 0 &lt;
-α &lt; 1. Assuming a random support model for the non- zero transform domain
-components, the algorithm reconstructs the WHT of the signal with a sample
-complexity O(K log_2(N/K)), a computational complexity O(K log_2(K) log_2(N/K))
-and with a very high probability asymptotically tending to 1.</p>
+<p>In this paper, we design a new iterative low-complexity algorithm for
+computing the Walsh-Hadamard transform (WHT) of an N dimensional signal with
+a K-sparse WHT.  We suppose that N is a power of two and K = O(N^α), scales
+sub-linearly in N for some α ∈ (0,1). Assuming a random support model for the
+nonzero transform-domain components, our algorithm reconstructs the WHT of the
+signal with a sample complexity O(K log_(N/K)) and a computational complexity
+O(K log_2(K)log_2(N/K)). Moreover, the algorithm succeeds with a high
+probability approaching 1 for large dimension N.  </p>
 
-<p>The approach is based on the subsampling (aliasing) property of the WHT, where
-by a carefully designed subsampling of the time domain signal, one can induce a
-suitable aliasing pattern in the transform domain. By treating the aliasing
-patterns as parity- check constraints and borrowing ideas from erasure
-correcting sparse-graph codes, the recovery of the non-zero spectral values has
-been formulated as a belief propagation (BP) algorithm (peeling decoding) over
-a sparse-graph code for the binary erasure channel (BEC). Tools from coding
-theory are used to analyze the asymptotic performance of the algorithm in the
-“very sparse” (α ∈ (0,1]) and the “less sparse” (α ∈ (1,1)) regime.</p>
+<p>Our approach is mainly based on the subsampling (aliasing) property of the WHT,
+where by a carefully designed subsampling of the time-domain signal, a suitable
+aliasing pattern is induced in the transform domain. We treat the resulting
+aliasing patterns as parity-check constraints and represent them by a bipartite
+graph.  We analyze the properties of the resulting bipartite graphs and borrow
+ideas from codes defined over sparse bipartite graphs to formulate the recovery
+of the nonzero spectral values as a peeling decoding algorithm for a specific
+sparse-graph code transmitted over a binary erasure channel (BEC). This enables
+us to use tools from coding theory (belief-propagation analysis) to
+characterize the asymptotic performance of our algorithm in the very sparse (α
+∈ (0,1/3]) and the less sparse (α ∈ (1/3,1)) regime. Comprehensive simulation
+results are provided to assess the empirical performance of the proposed
+algorithm.</p>
 
 <h2>
-<a name="contact" class="anchor" href="#contact"><span class="octicon octicon-link"></span></a>Contact</h2>
+<a id="contact" class="anchor" href="#contact" aria-hidden="true"><span class="octicon octicon-link"></span></a>Contact</h2>
 
 <p>Robin Scheibler 
-<a href="mailto:robin%5Bdot%5Dscheibler%5Bat%5Depfl%5Bdot%5Dch">email</a>
-<a href="http://lcav.epfl.ch/Robin_Scheibler">homepage</a></p>
+(<a href="mailto:robin%5Bdot%5Dscheibler%5Bat%5Depfl%5Bdot%5Dch">email</a>)
+(<a href="http://lcav.epfl.ch/Robin_Scheibler">homepage</a>)</p>
 
 <p>Please do not hesitate to contact me for help and support!
 I would be happy to help you run the code.</p>
 
 <h2>
-<a name="plateform" class="anchor" href="#plateform"><span class="octicon octicon-link"></span></a>Plateform</h2>
+<a id="plateform" class="anchor" href="#plateform" aria-hidden="true"><span class="octicon octicon-link"></span></a>Plateform</h2>
 
 <p>The code has been tested on Mac OS X 10.7, 10.8, 10.9, and on Ubuntu linux.</p>
 
 <p>Matlab mex wrappers were used for the code generating the figures in the paper. The core of the algorithm is implemented in C.</p>
 
 <h2>
-<a name="run-the-code-in-matlab" class="anchor" href="#run-the-code-in-matlab"><span class="octicon octicon-link"></span></a>Run the code in Matlab</h2>
+<a id="run-the-code-in-matlab" class="anchor" href="#run-the-code-in-matlab" aria-hidden="true"><span class="octicon octicon-link"></span></a>Run the code in Matlab</h2>
 
 <h3>
-<a name="reproduce-the-figures-from-the-paper" class="anchor" href="#reproduce-the-figures-from-the-paper"><span class="octicon octicon-link"></span></a>Reproduce the figures from the paper</h3>
+<a id="reproduce-the-figures-from-the-paper" class="anchor" href="#reproduce-the-figures-from-the-paper" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reproduce the figures from the paper</h3>
 
 <p>To reproduce the figures from the paper, type in the following in a matlab shell:</p>
 
@@ -94,8 +100,10 @@ make_figures
 <ol>
 <li>The simulation is fairly time-consuming.</li>
 <li>To speed-up the simulation, the parallel toolbox was used. If you do not have the parallel toolbox, replace the <code>parfor</code> instructions by <code>for</code> in all the Sim scripts.</li>
-</ol><h3>
-<a name="mex-files-info" class="anchor" href="#mex-files-info"><span class="octicon octicon-link"></span></a>Mex files info</h3>
+</ol>
+
+<h3>
+<a id="mex-files-info" class="anchor" href="#mex-files-info" aria-hidden="true"><span class="octicon octicon-link"></span></a>Mex files info</h3>
 
 <ul>
 <li>
@@ -158,8 +166,10 @@ Tfht: The runtime measurement of FastHadamard
 Tsfht: An array containing the runtime measurement of SparseFHT for every value of K
 </code></pre>
 </li>
-</ul><h2>
-<a name="reuse-the-c-code" class="anchor" href="#reuse-the-c-code"><span class="octicon octicon-link"></span></a>Reuse the C code</h2>
+</ul>
+
+<h2>
+<a id="reuse-the-c-code" class="anchor" href="#reuse-the-c-code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reuse the C code</h2>
 
 <p>The makefile in <code>./C</code> folder will compile all the code as well as a number
 of example/test files. This can be used as a basis to reuse the C code directly.</p>
@@ -175,22 +185,28 @@ make all
 <li>Fast Hadamard tranform,</li>
 <li>Fast linear algebra in GF2 (boolean matrices and vectors algebra),</li>
 <li>Test files.</li>
-</ul><h2>
-<a name="license" class="anchor" href="#license"><span class="octicon octicon-link"></span></a>License</h2>
+</ul>
 
-<p>2013-2014 (c) Robin Scheibler, Saeid Haghighatshoar, Martin, Vetterli.</p>
+<h2>
+<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
 
-<p>The code is free to reuse for academic purposes. However, please acknowledge its use with the following citation.</p>
+<p>2013-2015 (c) Robin Scheibler, Saeid Haghighatshoar, Martin, Vetterli.</p>
 
-<pre><code>@InProceedings{EPFL-CONF-189818,
+<p>This work is licensed under the Creative Commons
+Attribution-NonCommercial-ShareAlike 4.0 International License. To view a copy
+of this license, visit <a href="http://creativecommons.org/licenses/by-nc-sa/4.0/">http://creativecommons.org/licenses/by-nc-sa/4.0/</a>.</p>
+
+<p>The code is free to reuse for non-commercial and academic purposes. However,
+please acknowledge its use with the following citation.</p>
+
+<pre><code>@article{EPFL-JOUR-204991,
    author      = {Scheibler, Robin and Haghighatshoar, Saeid and Vetterli, Martin},
-   booktitle   = {51{s}t {A}nnual {A}llerton {C}onference on
-                 {C}ommunication, {C}ontrol, and {C}omputing},
-   location    = {Allerton Retreat Center, Monticello, Illinois},
    title       = {A {F}ast {H}adamard {T}ransform for {S}ignals with
-                 {S}ub-linear {S}parsity},
-   year        = 2013,
-   ee          = {http://arxiv.org/abs/1310.1803}
+                 {S}ub-linear {S}parsity in the {T}ransform {D}omain},
+   journal     = {IEEE Trans. Inf. Theory}
+   volume      = 61,
+   year        = 2015,
+   ee          = {http://infoscience.epfl.ch/record/204991}
 }
 </code></pre>
 
