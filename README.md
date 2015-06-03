@@ -56,6 +56,12 @@ The code has been tested on Mac OS X 10.7, 10.8, 10.9, and on Ubuntu linux.
 
 Matlab mex wrappers were used for the code generating the figures in the paper. The core of the algorithm is implemented in C.
 
+The code needs a C99 compatible compiler, which seems not to be the case for
+the windows version of Matlab currently. There seems to be some
+[workaround](https://stackoverflow.com/questions/3737356/mex-problem-how-to-support-c99matlab),
+one possibility being to rename all the `.c` files into `.cpp` and use a C++
+compiler. All of this is untested as of now.
+
 Run the code in Matlab
 ----------------------
 
