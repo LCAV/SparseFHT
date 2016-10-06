@@ -149,6 +149,9 @@ if __name__ == '__main__':
     # There is the option to only run one loop for test
     if test_flag:
         print 'Running one test loop only.'
+        params['inner_loops'] = 1
+        params['warm'] = 0
+        params['body'] = 1
         args = []
         for nn in params['n']:
             seed = np.random.randint(4294967295, dtype=np.uint32)

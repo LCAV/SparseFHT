@@ -175,6 +175,7 @@ if __name__ == '__main__':
     if test_flag:
         print 'Running one test loop only.'
         args = []
+        params['inner_loops'] = 1
         for a in params['alpha']:
             seed = np.random.randint(4294967295, dtype=np.uint32)
             args.append([a, seed])
