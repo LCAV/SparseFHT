@@ -117,9 +117,11 @@ if __name__ == "__main__":
     kp = np.r_[k, k[-1]+1]
     n = parameters['n']
     cth = np.empty_like(kp)
-    cth[:np.floor(n/3)] = n/kp[:np.floor(n/3)]
-    cth[np.floor(n/3):np.floor(2*n/3)] = 3
-    cth[np.floor(2*n/3):] = n / (n - kp[np.floor(2*n/3):])
+    one_third = int(np.floor(n/3))
+    two_thirds = int(np.floor(2*n/3))
+    cth[:one_third] = n/kp[:one_third]
+    cth[one_third:two_thirds] = 3
+    cth[two_thirds:] = n / (n - kp[two_thirds:])
 
     # deterministic
     plt.subplot(1,2,1)

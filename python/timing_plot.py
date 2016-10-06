@@ -61,8 +61,6 @@ if __name__ == "__main__":
             for i,a in enumerate(args):
                 k_lst = np.arange(1,a[0]-1)
                 c_lst = np.zeros(k_lst.shape)
-                print sim_out[i][0].shape
-                print k_lst.shape
                 for u in range(sim_out[i][0].shape[0]):  # loops
                     for v in range(sim_out[i][0].shape[1]):  # k value
                         table.append([a[0], 'SparseFHT', sim_out[i][0][u,v], k_lst[v], c_lst[v]])

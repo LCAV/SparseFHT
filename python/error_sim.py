@@ -1,12 +1,14 @@
 from __future__ import division
 import numpy as np
 
+n = 22
+
 # Global simulation parameter
 params = {
-        'n': 10,
-        'b': np.arange(1, 9),
+        'n': n,
+        'b': np.arange(1, n-1),
         'C': np.arange(1, 13),
-        'N': 2**10,
+        'N': 2**n,
         'algo_names': ['RANDOM', 'DETERMINISTIC'],
         'max_iter': 20,
         'sigma2': 100,

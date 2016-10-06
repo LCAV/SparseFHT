@@ -27,6 +27,9 @@ ENABLE_SERIAL=0
 # the number of cores.
 PARALLEL_WORKERS=4
 
+# The python module compiled file
+PYTHON_WRAPPER=pysparsefht/sparsefht_wrapper.so
+
 # Show help function
 ####################
 function show_help {
@@ -70,6 +73,14 @@ fi
 # Run all the scripts
 #####################
 
+# Check that the python module was built
+if [ ! -f ${PYTHON_WRAPPER} ]; then
+    echo "Building python module."
+    cd pysparsefht
+    python setup.py build_ext --inplace
+    cd ../
+fi
+
 # Prepare parallel processing
 if [ $PARALLEL_WORKERS -gt 0 ]; then
   echo "Starting ${PARALLEL_WORKERS} ipyparallel workers."
@@ -79,11 +90,13 @@ if [ $PARALLEL_WORKERS -gt 0 ]; then
   SERIAL_FLAG=
 else
   SERIAL_FLAG=-s
+  echo "Running the scripts in serial mode (no parallelism)"
 fi
 
 # Process test flag
 if [ $ENABLE_TEST -eq 1 ]; then
   TEST_FLAG=-t
+  echo "Running the script in testing mode"
 else
   TEST_FLAG=
 fi

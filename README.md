@@ -101,6 +101,8 @@ The `make_all_figures.sh` scripts has a few options for testing and number of co
 The number of workers is in general set to the number of threads available minus one. That is
 twice the number of cores, minus one.
 
+Running `./make_all_figures.sh -t -n 7` on an iCore7 took 10 to 15 minutes.
+
 ### Pysparsefht module
 
 A user-friendly python module was written around the C code and can be used to run the FHT and SparseFHT.
