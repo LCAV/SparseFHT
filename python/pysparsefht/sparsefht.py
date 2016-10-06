@@ -1,3 +1,34 @@
+"""
+Pysparsefht module provides a nice wrapper around
+the C functions computing conventional and sparse Hadamard transforms.
+
+Example
+-------
+
+    import pysparsefht
+
+    # Create a sparse Hadamard domain vector
+    y = np.zeros(512)
+    y[[13,72,121, 384]] = [12., -123., 91.5, -37.]
+
+    # We can generate the dense time domain by
+    # applying conventional FHT
+    x = pysparsefht.fht(y)
+
+    # Then, we use the sparse FHT to get back the
+    # original sparse vector
+    # y_val, y_loc contain the magnitude and locations, respectively, of the sparse signal
+    y_val, y_loc = pysparsefht.sparse_fht(xs, 4)
+
+    # The output of the transform is not normalize,
+    # so we need to divide by the square root of the length
+    y_hat = np.zeros(512)
+    y_hat[y_loc] = y_val / np.sqrt(512)
+
+    # says True
+    np.allclose(y_hat, y)
+
+"""
 
 import numpy as np
 import sparsefht_wrapper
@@ -37,7 +68,7 @@ def fht(x):
 
     return sparsefht_wrapper.fht(x, np.empty_like(x))
 
-def sparse_fht(x, K, B, C, max_iter=20, algo=sparsefht_wrapper.ALGO_OPTIMIZED, req_loops=False, req_unsat=False, seed=0):
+def sparse_fht(x, K, B=None, C=3, max_iter=20, algo=sparsefht_wrapper.ALGO_OPTIMIZED, req_loops=False, req_unsat=False, seed=0):
     '''
     Wrapper for the Sparse Fast Hadamard Transform
 
@@ -47,10 +78,10 @@ def sparse_fht(x, K, B, C, max_iter=20, algo=sparsefht_wrapper.ALGO_OPTIMIZED, r
         Input vector, the size should be a power of two.
     K: int
         The sparsity expected
-    B: int
-        The number of buckets
-    C: int
-        The oversampling factor
+    B: int, optional
+        The number of buckets, by default the closest power of two larger than K is used
+    C: int, optional
+        The oversampling factor, (default: 3)
     max_iter: int, optional
         The maximum number of iterations of decoder
     algo: int, optional
@@ -70,12 +101,19 @@ def sparse_fht(x, K, B, C, max_iter=20, algo=sparsefht_wrapper.ALGO_OPTIMIZED, r
     y: ndarray (1D or 2D)
         The output vector of magnitudes (size K)
     support: ndarray (1D or 2D)
-        The output vector of locations of non-zero coefficients (size K)
+        The output vector of locations of non-zero coefficients (size K), if less coefficients than K
+        were found, the remaining values are padded with -1.
     unsat: int or ndarray
         The number of unsatisfied checks (if req_unsat == True)
     loops: int or ndarray
         The number of loops run by decoder (if req_loops == True)
     '''
+
+    if B is None:
+        B = int(2**np.ceil(np.log2(K)))
+        print B
+        print C
+        print algo
 
     if x.ndim == 1:
         n = x.shape[0]

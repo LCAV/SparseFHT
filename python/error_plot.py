@@ -149,4 +149,8 @@ if __name__ == "__main__":
 
     plt.tight_layout(pad=0.5)
 
-    plt.show()
+    if not os.path.exists('./figures'):
+        os.mkdir('./figures')
+
+    plt.savefig('./figures/error.pdf', format='pdf')
+    plt.savefig('./figures/error.png', format='png')

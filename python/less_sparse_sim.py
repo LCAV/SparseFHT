@@ -28,7 +28,7 @@ params = {
         'algo_name': 'DETERMINISTIC',
         'max_iter': 20,
         'sigma2': 100,
-        'outer_loops': 1,
+        'outer_loops': 100,
         'inner_loops': 10,
         'seed': 54321,
         }
@@ -42,7 +42,6 @@ for a in params['alpha']:
     for epoch in range(params['outer_loops']):
         seed = np.random.randint(4294967295, dtype=np.uint32)
         args.append([a, seed])
-print args
 
 #---------------------------#
 # End of Configuration Zone #
@@ -58,17 +57,19 @@ def parallel_loop(args):
     import pysparsefht
     from utils import random_k_sparse
 
-    import mkl as mkl_service
+    try:
+        import mkl as mkl_service
+        # for such parallel processing, it is better 
+        # to deactivate multithreading in mkl
+        mkl_service.set_num_threads(1)
+    except ImportError:
+        pass
 
     K = int(np.round(2**(args[0]*params['n'])))
     B = int(2**params['b'])
     C = int(params['C'])
     algo_name = params['algo_name']
     seed = args[1]
-
-    # for such parallel processing, it is better 
-    # to deactivate multithreading in mkl
-    mkl_service.set_num_threads(1)
 
     if algo_name == 'RANDOM':
         algo = pysparsefht.ALGO_RANDOM
@@ -173,7 +174,10 @@ if __name__ == '__main__':
     # There is the option to only run one loop for test
     if test_flag:
         print 'Running one test loop only.'
-        args = args[:1]
+        args = []
+        for a in params['alpha']:
+            seed = np.random.randint(4294967295, dtype=np.uint32)
+            args.append([a, seed])
 
     # Main processing loop
     if serial_flag:
@@ -216,3 +220,4 @@ if __name__ == '__main__':
     
     np.savez(data_filename, args=args, parameters=params, out=out_unrolled) 
 
+    print 'Saved data to file: ' + data_filename

@@ -54,13 +54,145 @@ Plateform
 
 The code has been tested on Mac OS X 10.7, 10.8, 10.9, and on Ubuntu linux.
 
-Matlab mex wrappers were used for the code generating the figures in the paper. The core of the algorithm is implemented in C.
+Python and Matlab mex wrappers were used for the code generating the figures in
+the paper. The core of the algorithm is implemented in C.
 
 The code needs a C99 compatible compiler, which seems not to be the case for
 the windows version of Matlab currently. There seems to be some
 [workaround](https://stackoverflow.com/questions/3737356/mex-problem-how-to-support-c99matlab),
 one possibility being to rename all the `.c` files into `.cpp` and use a C++
 compiler. All of this is untested as of now.
+
+Run the code in Python
+----------------------
+
+A python wrapper for the C code was written and is available in `python/pysparsefht`.
+The wrapper must be compiled as follows
+
+    cd python/pysparsefht
+    python setup.py build_ext --inplace
+
+### Dependencies
+
+The code relies on `numpy`, `scipy`, `matplotlib`, `seaborn`, `pandas`, and
+`ipyparallel` for the parallel simulation. It is also possible to run all the
+code serially, but this would take a long time.
+
+### Reproduce the figures from the paper
+
+A script is provided to reproduce all the figures in the paper.
+Assuming the python module has been built as explained above, do the following.
+
+    cd python/
+    make_all_figures.sh
+
+And that's it pretty much. The simulation scripts are suffixed with `_sim` and produce
+a data file stored in `data` that can be reused later to generate the figure using
+a second script suffixed with `_plot`. The figures will be stored in the `figures` folder.
+
+The `make_all_figures.sh` scripts has a few options for testing and number of cores used.
+
+    ./make_all_figures.sh [OPTS]
+    Options:
+      -t    Runs a single loop only for test purpose
+      -s    Runs all the code in a simple for loop. No parallelism
+      -n x  Runs the loops in parallel using x workers. This option is ignored if -s is used
+
+The number of workers is in general set to the number of threads available minus one. That is
+twice the number of cores, minus one.
+
+### Pysparsefht module
+
+A user-friendly python module was written around the C code and can be used to run the FHT and SparseFHT.
+
+    import numpy as np
+    import pysparsefht
+
+    # Create a sparse Hadamard domain vector
+    y = np.zeros(512)
+    y[[13,72,121, 384]] = [12., -123., 91.5, -37.]
+
+    # We can generate the dense time domain by
+    # applying conventional FHT
+    x = pysparsefht.fht(y)
+
+    # Then, we use the sparse FHT to get back the
+    # original sparse vector
+    # y_val, y_loc contain the magnitude and locations, respectively, of the sparse signal
+    y_val, y_loc = pysparsefht.sparse_fht(xs, 4)
+
+    # The output of the transform is not normalize,
+    # so we need to divide by the square root of the length
+    y_hat = np.zeros(512)
+    y_hat[y_loc] = y_val / np.sqrt(512)
+
+    # says True
+    np.allclose(y_hat, y)
+
+The docstring for `sparse_fht`:
+
+    Signature: pysparsefht.sparse_fht(x, K, B, C, max_iter=20, algo=3, req_loops=False, req_unsat=False, seed=0)
+    Docstring:
+    Wrapper for the Sparse Fast Hadamard Transform
+
+    Parameters
+    ----------
+    x: ndarray (1D or 2D)
+        Input vector, the size should be a power of two.
+        K: int
+          The sparsity expected
+        B: int
+          The number of buckets
+        C: int
+          The oversampling factor
+        max_iter: int, optional
+          The maximum number of iterations of decoder
+        algo: int, optional
+          The variant of the algorithm to use:
+            * ALGO_RANDOM : Uses random hash functions
+            * ALGO_DETERMINISTIC: Uses deterministic hash functions
+            * ALGO_OPTIMIZED: Uses deterministic hash functions with optimized implementation (default)
+        req_loops: bool, optional
+          Requests to return the number of loops executed by the decoded
+        req_unsat: bool, optional
+          Requests to return the number of unsatisfied check nodes when the algorithm terminates
+        seed: unsigned int, optional
+          A seed for the random number generator to pass to the C code
+
+    Returns
+    -------
+    y: ndarray (1D or 2D)
+      The output vector of magnitudes (size K)
+    support: ndarray (1D or 2D)
+      The output vector of locations of non-zero coefficients (size K)
+    unsat: int or ndarray
+      The number of unsatisfied checks (if req_unsat == True)
+    loops: int or ndarray
+      The number of loops run by decoder (if req_loops == True)
+
+The docstring for `fht`:
+
+    Signature: pysparsefht.fht(x)
+    Docstring:
+    Fast Hadamard Transform
+
+    This is a wrapper that calls a C implementation of the fast hadamard transform
+
+    If x is a 2D array, the transform operates on the rows.
+
+    The length of the transform should be a power of two.
+
+    Parameters
+    ----------
+    x: ndarray (1D or 2D)
+        The data to transform
+
+        Returns
+        -------
+        A new ndarray containing the Hadamard transform of x
+
+
+
 
 Run the code in Matlab
 ----------------------

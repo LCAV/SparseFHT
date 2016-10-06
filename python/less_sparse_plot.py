@@ -119,4 +119,8 @@ if __name__ == "__main__":
 
     plt.tight_layout(pad=0.5)
 
-    plt.show()
+    if not os.path.exists('./figures'):
+        os.mkdir('./figures')
+
+    plt.savefig('./figures/less_sparse.pdf', format='pdf')
+    plt.savefig('./figures/less_sparse.png', format='png')

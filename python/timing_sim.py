@@ -16,7 +16,7 @@ params = {
         'warm': 2,
         'body': 10,
         'max_mag': 500,
-        'outer_loops': 1,
+        'outer_loops': 100,
         'inner_loops': 10,
         'seed': 67584,
         }
@@ -44,7 +44,13 @@ def parallel_loop(args):
     import pysparsefht
     from utils import random_k_sparse
 
-    import mkl as mkl_service
+    try:
+        import mkl as mkl_service
+        # for such parallel processing, it is better 
+        # to deactivate multithreading in mkl
+        mkl_service.set_num_threads(1)
+    except ImportError:
+        pass
 
     n = args[0]
 
@@ -143,7 +149,10 @@ if __name__ == '__main__':
     # There is the option to only run one loop for test
     if test_flag:
         print 'Running one test loop only.'
-        args = args[:1]
+        args = []
+        for nn in params['n']:
+            seed = np.random.randint(4294967295, dtype=np.uint32)
+            args.append([nn, seed])
 
     # Main processing loop
     if serial_flag:
@@ -186,3 +195,4 @@ if __name__ == '__main__':
         pickle.dump(dict(args=args, parameters=params, out=out), f)
         f.close()
 
+    print 'Saved data to file: ' + data_filename

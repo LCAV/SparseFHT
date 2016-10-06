@@ -135,6 +135,12 @@ if __name__ == "__main__":
 
     plt.tight_layout(pad=0.5)
 
+    if not os.path.exists('./figures'):
+        os.mkdir('./figures')
+
+    plt.savefig('./figures/alpha_star.pdf', format='pdf')
+    plt.savefig('./figures/alpha_star.png', format='png')
+
     # Second figure illustrate the runtime for a specific size
     plt.figure()
 
@@ -160,4 +166,6 @@ if __name__ == "__main__":
     sns.despine(offset=10, trim=False, left=True, bottom=True)
 
     plt.tight_layout(pad=0.5)
-    plt.show()
+
+    plt.savefig('./figures/runtime.pdf', format='pdf')
+    plt.savefig('./figures/runtime.png', format='png')
