@@ -41,9 +41,9 @@ Success   = zeros(blen, clen, Repetitions);
 % RUN EXPERIMENT %
 %%%%%%%%%%%%%%%%%%
 
-if (matlabpool('size') == 0)
-  matlabpool open;
-end
+%if (matlabpool('size') == 0)
+  %matlabpool open;
+%end
 
 for ic = 1:clen
   fprintf('%d ', C(ic));
