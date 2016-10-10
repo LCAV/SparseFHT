@@ -25,7 +25,7 @@ ENABLE_SERIAL=0
 # This number can be set to the number of available threads of
 # your CPU minus 1. Usually, the number of threads is twice
 # the number of cores.
-PARALLEL_WORKERS=4
+PARALLEL_WORKERS=0
 
 # The python module compiled file
 PYTHON_WRAPPER=pysparsefht/sparsefht_wrapper.so
@@ -70,12 +70,22 @@ if [ $ENABLE_SERIAL -eq 1 ]; then
   PARALLEL_WORKERS=0
 fi
 
+# Check that all necessary packages are installed
+##################
+
+python check_requirements.py &> /dev/null
+if [ $? -ne 0 ]; then
+  echo "Some dependency is not met. Please check you have the packages listed in requirements.txt installed."
+  exit 1
+fi
+
 # Run all the scripts
 #####################
 
 # Check that the python module was built
 if [ ! -f ${PYTHON_WRAPPER} ]; then
     echo "Building python module."
+    echo ""
     cd pysparsefht
     python setup.py build_ext --inplace
     cd ../
@@ -83,9 +93,13 @@ fi
 
 # Prepare parallel processing
 if [ $PARALLEL_WORKERS -gt 0 ]; then
+  echo ""
   echo "Starting ${PARALLEL_WORKERS} ipyparallel workers."
+  echo ""
   ipcluster start -n ${PARALLEL_WORKERS} --daemonize
+  echo ""
   echo "Wait for 30 seconds to give time to engines to start..."
+  echo ""
   sleep 30
   SERIAL_FLAG=
 else
