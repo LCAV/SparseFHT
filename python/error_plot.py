@@ -125,9 +125,10 @@ if __name__ == "__main__":
 
     # deterministic
     plt.subplot(1,2,1)
-    plt.imshow(p_rand.as_matrix().T, origin='lower', aspect='auto', extent=extent, cmap=cmap)
+    plt.imshow(p_det.as_matrix().T, origin='lower', aspect='auto', extent=extent, cmap=cmap, interpolation='none')
     plt.plot(kp-0.5, cth, 'k')
 
+    plt.title('Deterministic hash functions')
     plt.xlim([k[0], k[-1]])
     plt.ylim([C[0], C[-1]])
     plt.xticks([int(parameters['n'] / 3), int(2 * parameters['n'] / 3)], ['1/3','2/3'])
@@ -138,9 +139,10 @@ if __name__ == "__main__":
 
     # random
     plt.subplot(1,2,2)
-    plt.imshow(p_det.as_matrix().T, origin='lower', aspect='auto', extent=extent, cmap=cmap)
+    plt.imshow(p_rand.as_matrix().T, origin='lower', aspect='auto', extent=extent, cmap=cmap, interpolation='none')
     plt.plot(kp-0.5, cth, 'k')
 
+    plt.title('Random hash functions')
     plt.xlim([k[0], k[-1]])
     plt.ylim([C[0], C[-1]])
     plt.xticks([int(parameters['n'] / 3), int(2 * parameters['n'] / 3)], ['1/3','2/3'])

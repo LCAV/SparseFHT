@@ -67,10 +67,6 @@ def parallel_loop(args):
     algo_name = params['algo_name']
     seed = args[1]
 
-    # for such parallel processing, it is better 
-    # to deactivate multithreading in mkl
-    mkl_service.set_num_threads(1)
-
     if algo_name == 'RANDOM':
         algo = pysparsefht.ALGO_RANDOM
     elif algo_name == 'DETERMINISTIC':
